@@ -1,6 +1,5 @@
 # camera
-
-A new Flutter project.
+Full camera in Flutter Dart
 
 ## Getting Started
 
@@ -16,3 +15,8 @@ For help getting started with Flutter, view our
 samples, guidance on mobile development, and a full API reference.
 #camera
 # camera
+
+ - Square cropped
+ - Takes a picture
+ - Saves file to the gallery
+ 
