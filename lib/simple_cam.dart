@@ -64,16 +64,21 @@ class MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return Stack(children: <Widget>[
-              CameraPreview(_controller),
+              Container(
+                    width: size.width,
+                    height: size.height * 0.8,
+                      child: CameraPreview(_controller),
+                  ),
               Column(children: <Widget>[
                 WhiteSpace(),
-                SizedBox(height: MediaQuery.of(context).size.width),
+                SizedBox(height: size.width),
                 WhiteSpace(),
               ]),
               CameraButton(takePic),
