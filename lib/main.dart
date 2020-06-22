@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:camera/camera.dart';
-import 'simple_cam.dart';
+import 'square_cam.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +14,7 @@ Future<void> main() async {
 
   runApp(
     MaterialApp(
-      home: MyApp(camera: firstCamera)
+      home: HomePage(camera: firstCamera)
     )
   );
 }
