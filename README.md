@@ -1,6 +1,11 @@
 # square_camera
 
-A new Flutter project.
+Flutter project.
+
+- square camera preview
+- takes a picture
+- cropes it
+- saves cropped image to the gallery
 
 ## Getting Started
 

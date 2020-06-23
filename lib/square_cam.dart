@@ -1,17 +1,18 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:camera/camera.dart';
 
 
 import 'button.dart';
 import 'space.dart';
 import 'taken_picture.dart';
+
 
 class HomePage extends StatefulWidget {
   final CameraDescription camera;
@@ -67,19 +68,10 @@ class MyAppState extends State<HomePage> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => Picture(
-            image: image,
-          ),
+          builder: (context) => Picture(image: image),
         ),
       );
       GallerySaver.saveImage(image.path);
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => TakenPicture(imagePath: path),
-        ),
-      );
-      GallerySaver.saveImage(path);
     } catch (e) {
       print(e);
     }
@@ -116,16 +108,3 @@ class MyAppState extends State<HomePage> {
   }
 }
 
-class TakenPicture extends StatelessWidget {
-  final String imagePath;
-
-  const TakenPicture({Key key, this.imagePath}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: 
-      Image.file(File(imagePath)),
-    );
-  }
-}
