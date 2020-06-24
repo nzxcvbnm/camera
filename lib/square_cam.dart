@@ -8,11 +8,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:camera/camera.dart';
 
-
 import 'button.dart';
 import 'space.dart';
 import 'taken_picture.dart';
-
 
 class HomePage extends StatefulWidget {
   final CameraDescription camera;
@@ -45,7 +43,7 @@ class MyAppState extends State<HomePage> {
     _controller.dispose();
     super.dispose();
   }
-
+  
   void takePic() async {
     try {
       await _initializeControllerFuture;
@@ -54,17 +52,25 @@ class MyAppState extends State<HomePage> {
         '${DateTime.now()}.png',
       );
       await _controller.takePicture(path);
-      File image = await ImageCropper.cropImage(
-      sourcePath: path,
-      androidUiSettings: AndroidUiSettings(
-        backgroundColor: Colors.white,
-          hideBottomControls: true,
-          initAspectRatio: CropAspectRatioPreset.original,
-          lockAspectRatio: true),
-      aspectRatioPresets: [
-        CropAspectRatioPreset.square,
-      ],
+      cropImage(path);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future cropImage(String path) async {
+    File image = await ImageCropper.cropImage(
+        sourcePath: path,
+        androidUiSettings: AndroidUiSettings(
+            backgroundColor: Colors.white,
+            hideBottomControls: true,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: true),
+        aspectRatioPresets: [
+          CropAspectRatioPreset.square,
+        ],
       );
+      if (image != null) {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -72,39 +78,36 @@ class MyAppState extends State<HomePage> {
         ),
       );
       GallerySaver.saveImage(image.path);
-    } catch (e) {
-      print(e);
-    }
-  }
-  
-
-@override
-  Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    return Scaffold(
-      body: FutureBuilder<void>(
-        future: _initializeControllerFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return Stack(children: <Widget>[
-              Container(
-                    width: size.width,
-                    height: size.height * 0.8,
-                      child: CameraPreview(_controller),
-                  ),
-              Column(children: <Widget>[
-                WhiteSpace(),
-                SizedBox(height: size.width),
-                WhiteSpace(),
-              ]),
-              CameraButton(takePic),
-            ]);
-          } else {
-            return Center(child: CircularProgressIndicator());
-          }
-        },
-      ),
-    );
   }
 }
+
+  @override
+  Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+      return Scaffold(
+        body: FutureBuilder<void>(
+          future: _initializeControllerFuture,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return Stack(children: <Widget>[
+                Container(
+                  width: size.width,
+                  height: size.height * 0.8,
+                  child: CameraPreview(_controller),
+                ),
+                Column(children: <Widget>[
+                  WhiteSpace(),
+                  SizedBox(height: size.width),
+                  WhiteSpace(),
+                ]),
+                CameraButton(takePic),
+              ]);
+            } else {
+              return Center(child: CircularProgressIndicator());
+            }
+          },
+        ),
+      );
+    }
+  }
 
