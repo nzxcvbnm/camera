@@ -1,7 +1,7 @@
 name: square_camera
 description: Camera with a square prewiev, takes a picture, croppes it, saves file to the gallery.
 repository: https://github.com/nzxcvbnm/camera
-email: nmaslij.9@gmail.com
+email: natalia.maslij1@gmail.com
 
 version: 1.0.0+1
 
